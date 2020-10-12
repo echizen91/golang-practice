@@ -65,3 +65,101 @@ func AddTwoNumbersLL(l1 *ListNode, l2 *ListNode) *ListNode {
 
 	return result
 }
+
+// AddTwoNumbersLLOptimized : Add numbers in reverse order (NOT DONE)
+func AddTwoNumbersLLOptimized(l1 *ListNode, l2 *ListNode) *ListNode {
+	if l1.Next == nil && l2.Next == nil {
+		total := l1.Val + l2.Val
+		remainder := total % 10
+		carryOver := total / 10
+		l1.Val = remainder
+		if carryOver > 0 {
+			next := &ListNode{
+				Val: 1,
+			}
+			l1.Next = next
+		}
+		return l1
+	}
+	result := &ListNode{}
+	tempNode := &ListNode{}
+	var carryOver int
+	x := 1
+	for l1.Next != nil && l2.Next != nil {
+		if x == 1 {
+			total := l1.Val + l2.Val
+			remainder := total % 10
+			carryOver = total / 10
+			result.Val = remainder
+			x++
+			l1 = l1.Next
+			l2 = l2.Next
+			continue
+		}
+		if x == 2 {
+			total := l1.Val + l2.Val + carryOver
+			remainder := total % 10
+			carryOver = total / 10
+			tempNode.Val = remainder
+			result.Next = tempNode
+			x++
+			l1 = l1.Next
+			l2 = l2.Next
+			continue
+		}
+
+		total := l1.Val + l2.Val + carryOver
+		remainder := total % 10
+		carryOver = total / 10
+		next := &ListNode{
+			Val: remainder,
+		}
+		tempNode.Next = next
+		tempNode = tempNode.Next
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+	{
+		total := l1.Val + l2.Val + carryOver
+		remainder := total % 10
+		carryOver = total / 10
+		next := &ListNode{
+			Val: remainder,
+		}
+		tempNode.Next = next
+		tempNode = tempNode.Next
+	}
+	{
+		// Rest
+		for l1.Next != nil {
+			total := l1.Val + carryOver
+			remainder := total % 10
+			carryOver = total / 10
+			next := &ListNode{
+				Val: remainder,
+			}
+			tempNode.Next = next
+			tempNode = tempNode.Next
+			l1 = l1.Next
+		}
+		for l2.Next != nil {
+			total := l2.Val + carryOver
+			remainder := total % 10
+			carryOver = total / 10
+			next := &ListNode{
+				Val: remainder,
+			}
+			tempNode.Next = next
+			tempNode = tempNode.Next
+			l2 = l2.Next
+		}
+	}
+
+	if carryOver > 0 {
+		next := &ListNode{
+			Val: 1,
+		}
+		tempNode.Next = next
+	}
+	return result
+}

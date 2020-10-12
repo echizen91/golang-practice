@@ -17,7 +17,7 @@ type ListNode struct {
 	Next *ListNode
 }
 
-// AddTwoNumbersLL : Add numbers in reverse order
+// AddTwoNumbersLL : Add numbers in reverse order (only works for int32 numbers)
 func AddTwoNumbersLL(l1 *ListNode, l2 *ListNode) *ListNode {
 	var first int
 	var second int

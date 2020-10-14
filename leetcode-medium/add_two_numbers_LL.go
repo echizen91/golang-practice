@@ -8,7 +8,8 @@ Add the two numbers and return the sum as a linked list.
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
 Solution:
-Not Solved, Need to consider doing addition directly from linked list
+Runtime: 12 ms, faster than 66.70% of Go online submissions for Add Two Numbers.
+Memory Usage: 4.7 MB, less than 100.00% of Go online submissions for Add Two Numbers.
 */
 
 // ListNode : Linked List Nodes
@@ -66,100 +67,80 @@ func AddTwoNumbersLL(l1 *ListNode, l2 *ListNode) *ListNode {
 	return result
 }
 
-// AddTwoNumbersLLOptimized : Add numbers in reverse order (NOT DONE)
+// AddTwoNumbersLLOptimized : Add numbers in reverse order (Done)
 func AddTwoNumbersLLOptimized(l1 *ListNode, l2 *ListNode) *ListNode {
-	if l1.Next == nil && l2.Next == nil {
-		total := l1.Val + l2.Val
-		remainder := total % 10
-		carryOver := total / 10
-		l1.Val = remainder
-		if carryOver > 0 {
-			next := &ListNode{
-				Val: 1,
-			}
-			l1.Next = next
-		}
-		return l1
+	var carryOver, l1Count, l2Count int
+
+	temp1 := *&l1
+	temp2 := *&l2
+	for temp1.Next != nil {
+		l1Count++
+		temp1 = temp1.Next
 	}
-	result := &ListNode{}
-	tempNode := &ListNode{}
-	var carryOver int
-	x := 1
-	for l1.Next != nil && l2.Next != nil {
-		if x == 1 {
-			total := l1.Val + l2.Val
-			remainder := total % 10
-			carryOver = total / 10
-			result.Val = remainder
-			x++
-			l1 = l1.Next
-			l2 = l2.Next
-			continue
-		}
-		if x == 2 {
-			total := l1.Val + l2.Val + carryOver
-			remainder := total % 10
-			carryOver = total / 10
-			tempNode.Val = remainder
-			result.Next = tempNode
-			x++
-			l1 = l1.Next
-			l2 = l2.Next
-			continue
+	for temp2.Next != nil {
+		l2Count++
+		temp2 = temp2.Next
+	}
+
+	if l1Count < l2Count {
+		l2, l1 = l1, l2
+	}
+	l1Head := *&l1
+	l2Head := *&l2
+
+	for l1Head.Next != nil && l2Head.Next != nil {
+		total := l1Head.Val + l2Head.Val + carryOver
+		remainder := total % 10
+		carryOver = total / 10
+		l1Head.Val = remainder
+
+		// Next for both
+		l1Head = l1Head.Next
+		l2Head = l2Head.Next
+	}
+
+	if l1Head.Next == nil {
+		goto end
+	}
+
+	{
+		total := l1Head.Val + l2Head.Val + carryOver
+		remainder := total % 10
+		carryOver = total / 10
+		l1Head.Val = remainder
+
+		l1Head = l1Head.Next
+		l2Head = l2Head.Next
+	}
+
+	for l1Head.Next != nil {
+		total := l1Head.Val + carryOver
+		remainder := total % 10
+		carryOver = total / 10
+		l1Head.Val = remainder
+
+		// Next
+		l1Head = l1Head.Next
+	}
+end:
+	{
+		var total int
+		if l2Head != nil {
+			total = l1Head.Val + l2Head.Val + carryOver
+		} else {
+			total = l1Head.Val + carryOver
 		}
 
-		total := l1.Val + l2.Val + carryOver
 		remainder := total % 10
 		carryOver = total / 10
-		next := &ListNode{
-			Val: remainder,
-		}
-		tempNode.Next = next
-		tempNode = tempNode.Next
-		l1 = l1.Next
-		l2 = l2.Next
-	}
-	{
-		total := l1.Val + l2.Val + carryOver
-		remainder := total % 10
-		carryOver = total / 10
-		next := &ListNode{
-			Val: remainder,
-		}
-		tempNode.Next = next
-		tempNode = tempNode.Next
-	}
-	{
-		// Rest
-		for l1.Next != nil {
-			total := l1.Val + carryOver
-			remainder := total % 10
-			carryOver = total / 10
-			next := &ListNode{
-				Val: remainder,
-			}
-			tempNode.Next = next
-			tempNode = tempNode.Next
-			l1 = l1.Next
-		}
-		for l2.Next != nil {
-			total := l2.Val + carryOver
-			remainder := total % 10
-			carryOver = total / 10
-			next := &ListNode{
-				Val: remainder,
-			}
-			tempNode.Next = next
-			tempNode = tempNode.Next
-			l2 = l2.Next
-		}
+		l1Head.Val = remainder
 	}
 
 	if carryOver > 0 {
-		next := &ListNode{
+		l1Head.Next = &ListNode{
 			Val: 1,
 		}
-		tempNode.Next = next
 	}
-	return result
+
+	return l1
 }

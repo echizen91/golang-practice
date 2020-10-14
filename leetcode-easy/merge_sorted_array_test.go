@@ -33,42 +33,42 @@ func TestMergeSortedArray(t *testing.T) {
 		args args
 		want []int
 	}{
-		{
-			name: `Input:
-					nums1 = [1,2,3,0,0,0], m = 3
-					nums2 = [2,5,6],       n = 3`,
-			args: args{
-				nums1: []int{1, 2, 3, 0, 0, 0},
-				m:     3,
-				nums2: []int{2, 5, 6},
-				n:     3,
-			},
-			want: []int{1, 2, 2, 3, 5, 6},
-		},
-		{
-			name: `Input:
-					nums1 = [1,0], m = 1
-					nums2 = [2],   n = 1`,
-			args: args{
-				nums1: []int{1, 0},
-				m:     1,
-				nums2: []int{2},
-				n:     1,
-			},
-			want: []int{1, 2},
-		},
-		{
-			name: `Input:
-					nums1 = [4,5,6,0,0,0], m = 3
-					nums2 = [1,2,3],   	   n = 3`,
-			args: args{
-				nums1: []int{4, 5, 6, 0, 0, 0},
-				m:     3,
-				nums2: []int{1, 2, 3},
-				n:     3,
-			},
-			want: []int{1, 2, 3, 4, 5, 6},
-		},
+		// {
+		// 	name: `Input:
+		// 			nums1 = [1,2,3,0,0,0], m = 3
+		// 			nums2 = [2,5,6],       n = 3`,
+		// 	args: args{
+		// 		nums1: []int{1, 2, 3, 0, 0, 0},
+		// 		m:     3,
+		// 		nums2: []int{2, 5, 6},
+		// 		n:     3,
+		// 	},
+		// 	want: []int{1, 2, 2, 3, 5, 6},
+		// },
+		// {
+		// 	name: `Input:
+		// 			nums1 = [1,0], m = 1
+		// 			nums2 = [2],   n = 1`,
+		// 	args: args{
+		// 		nums1: []int{1, 0},
+		// 		m:     1,
+		// 		nums2: []int{2},
+		// 		n:     1,
+		// 	},
+		// 	want: []int{1, 2},
+		// },
+		// {
+		// 	name: `Input:
+		// 			nums1 = [4,5,6,0,0,0], m = 3
+		// 			nums2 = [1,2,3],   	   n = 3`,
+		// 	args: args{
+		// 		nums1: []int{4, 5, 6, 0, 0, 0},
+		// 		m:     3,
+		// 		nums2: []int{1, 2, 3},
+		// 		n:     3,
+		// 	},
+		// 	want: []int{1, 2, 3, 4, 5, 6},
+		// },
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

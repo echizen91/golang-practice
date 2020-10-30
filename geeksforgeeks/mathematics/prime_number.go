@@ -12,8 +12,12 @@ func isPrime(n int) bool {
 		return true
 	}
 
+	if n%2 == 0 || n%3 == 0 {
+		return false
+	}
+
 	for i := 5; i*i <= n; i += 6 {
-		if n%(i-1) == 0 || n%(n+1) == 0 {
+		if n%i == 0 || n%(n+2) == 0 {
 			return false
 		}
 	}

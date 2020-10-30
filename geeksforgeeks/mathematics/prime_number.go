@@ -13,7 +13,7 @@ func isPrime(n int) bool {
 	}
 
 	for i := 5; i*i <= n; i += 6 {
-		if n%5 == 0 {
+		if n%(i-1) == 0 || n%(n+1) == 0 {
 			return false
 		}
 	}

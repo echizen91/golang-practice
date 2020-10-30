@@ -47,6 +47,13 @@ func Test_isPrime(t *testing.T) {
 			want: true,
 		},
 		{
+			name: "test input = 32",
+			args: args{
+				n: 32,
+			},
+			want: false,
+		},
+		{
 			name: "test input = 61",
 			args: args{
 				n: 61,

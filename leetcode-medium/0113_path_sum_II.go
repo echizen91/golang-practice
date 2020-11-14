@@ -1,5 +1,6 @@
 package medium
 
+// TreeNode : binary tree
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
